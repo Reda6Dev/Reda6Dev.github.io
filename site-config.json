@@ -1,0 +1,150 @@
+{
+  "site": {
+    "brandName": "REDA DEV",
+    "owner": "Reda6Dev",
+    "siteUrl": "https://reda6dev.github.io",
+    "heroBadge": "تطبيقات أندرويد • أدوات ويندوز • تعريب الألعاب",
+    "heroTitle": "أهلاً بك في مساحة REDA DEV البرمجية",
+    "heroSubtitle": "أطوّر تطبيقات أندرويد مفتوحة المصدر وأدوات سطح مكتب متخصصة في تعريب الألعاب والبرامج بدعم متكامل للغة العربية.",
+    "bio": "مطور مستقل أعمل على بناء تطبيقات أندرويد عملية بواجهة عربية كاملة، وأدوات مساعدة لنظام ويندوز، إلى جانب مشاريع تعريب متكاملة للألعاب وبيئات التطوير مع العناية بتجربة المستخدم وجودة اللغة العربية.",
+    "githubUrl": "https://github.com/Reda6Dev",
+    "youtubeUrl": "https://www.youtube.com/@rk2003",
+    "youtubeHandle": "@rk2003",
+    "youtubeChannelName": "REDA DEV",
+    "youtubeChannelId": "UC88P8TM4I2JZ1aZ5_p32ZPg",
+    "youtubeFeaturedVideoId": "",
+    "youtubeDescription": "شروحات عملية، استعراض لأحدث إصدارات التطبيقات والأدوات، وتجارب تعريب الألعاب خطوة بخطوة على قناة REDA DEV."
+  },
+  "androidApps": [
+    {
+      "id": "atlas",
+      "name": "Atlas (أطلس)",
+      "tagline": "قارئ مانجا ومانهوا مفتوح المصدر بواجهة عربية كاملة",
+      "description": "تطبيق أندرويد مجاني ومفتوح المصدر لقراءة المانجا والمانهوا، مبني بتجربة بصرية مخصصة وتعريب شامل للواجهة والإعدادات، مع أدوات ذكية لتنظيم المكتبة واكتشاف الأعمال بسهولة.",
+      "repo": "Reda6Dev/Atlas",
+      "icon": "assets/screenshots/atlas/icon.png",
+      "fallbackVersion": "v1.14.6",
+      "features": [
+        "واجهة عربية كاملة ومريحة مع دعم تصفح من اليمين إلى اليسار",
+        "شاشة رئيسية متطورة لاكتشاف الأعمال الجديدة والأكثر قراءة",
+        "إدارة مرنة للفئات والمكتبة وتتبع فصول القراءة تلقائياً",
+        "دعم مصادر متعددة وتحديثات مستمرة عبر GitHub Releases"
+      ],
+      "screenshots": [
+        {
+          "url": "assets/screenshots/atlas/screenshot_1.png",
+          "caption": "الشاشة الرئيسية واستكشاف الأعمال"
+        },
+        {
+          "url": "assets/screenshots/atlas/screenshot_2.png",
+          "caption": "المكتبة وتصنيف الفئات"
+        },
+        {
+          "url": "assets/screenshots/atlas/screenshot_3.png",
+          "caption": "صفحة تفاصيل العمل والفصول"
+        }
+      ]
+    },
+    {
+      "id": "gamedealshub",
+      "name": "Game Deals Hub",
+      "tagline": "متابعة تخفيضات ألعاب الحاسوب والألعاب المجانية أولاً بأول",
+      "description": "تطبيق أندرويد مجاني يجمع لك أفضل تخفيضات ألعاب الحاسوب والألعاب المجانية لفترة محدودة على متاجر Steam وEpic Games Store وغيرها في مكان واحد وبواجهة عربية واضحة.",
+      "repo": "Reda6Dev/GameDealsHub",
+      "icon": "",
+      "fallbackVersion": "v1.2",
+      "features": [
+        "تجميع يومي للألعاب المجانية لفترة محدودة وأقوى الخصومات",
+        "تصفح وفلترة العروض حسب المتجر والسعر ونسبة الخصم",
+        "تنبيه للعروض التي تقترب من الانتهاء لعدم تفويت أي لعبة مجانية",
+        "عرض منظم للأسعار والتفاصيل بواجهة عربية/إنجليزية سلسة"
+      ],
+      "screenshots": [
+        {
+          "url": "assets/screenshots/gamedealshub/screenshot_1.png",
+          "caption": "واجهة اكتشف وأبرز الصفقات"
+        },
+        {
+          "url": "assets/screenshots/gamedealshub/screenshot_2.png",
+          "caption": "تصفح التخفيضات والفلترة حسب المتجر"
+        },
+        {
+          "url": "assets/screenshots/gamedealshub/screenshot_3.png",
+          "caption": "قسم الألعاب المجانية حالياً"
+        }
+      ]
+    }
+  ],
+  "desktopTools": [
+    {
+      "id": "bannerlord-translator-studio",
+      "name": "Bannerlord Translator Studio",
+      "category": "تعريب الألعاب",
+      "icon": "⚔️",
+      "description": "أداة ويندوز أصلية بلغة C# وWPF لتعريب مودات Mount & Blade II: Bannerlord مع محرر تفاعلي وقواميس سحابية موحدة وفحص تلقائي للتغييرات.",
+      "repo": "Reda6Dev/Bannerlord-Translator-Studio",
+      "fallbackVersion": "1.0.0",
+      "tags": ["C#", "WPF", "Bannerlord"]
+    },
+    {
+      "id": "clickntranslate",
+      "name": "Click'n'Translate",
+      "category": "أدوات النظام والتطوير",
+      "icon": "🌐",
+      "description": "مترجم شاشة فوري وقارئ نصوص OCR مفتوح المصدر لترجمة الألعاب والصور والنصوص المحددة بدعم كامل للغة العربية وقواميس مخصصة.",
+      "repo": "Reda6Dev/clickntranslate",
+      "fallbackVersion": "v1.8.2-ar2",
+      "tags": ["Python", "OCR", "ترجمة فورية"]
+    },
+    {
+      "id": "omnihub",
+      "name": "OmniHub",
+      "category": "أدوات النظام والتطوير",
+      "icon": "🧰",
+      "description": "بيئة عمل مكتبية موحدة على .NET 8 وWPF لإدارة وتشغيل أدوات التطوير والمهام اليومية على نظام ويندوز من واجهة واحدة منظمة.",
+      "repo": "Reda6Dev/OmniHub",
+      "fallbackVersion": "v1.0.0",
+      "tags": ["C#", ".NET 8", "WPF"]
+    },
+    {
+      "id": "crashsentinel",
+      "name": "CrashSentinel",
+      "category": "أدوات النظام والتطوير",
+      "icon": "🛡️",
+      "description": "أداة متخصصة في فحص وتشخيص أعطال وتجمّد لعبة Mount & Blade II: Bannerlord وتحديد المودات المسببة للمشكلات بسرعة.",
+      "repo": "Reda6Dev/CrashSentinel",
+      "fallbackVersion": "v1.0.0",
+      "tags": ["C#", "تشخيص الأعطال", "Bannerlord"]
+    },
+    {
+      "id": "cod-waw-arabic",
+      "name": "CoD-WaW-Arabic-Tools",
+      "category": "تعريب الألعاب",
+      "icon": "🎖️",
+      "description": "مجموعة أدوات ومثبّت تلقائي لتعريب قصة لعبة Call of Duty: World at War، تشمل استخراج النصوص وهندسة الخط العربي وبناء ملفات FastFile.",
+      "repo": "Reda6Dev/CoD-WaW-Arabic-Tools",
+      "fallbackVersion": "v2.1",
+      "tags": ["Python", "تعريب", "FastFile"]
+    },
+    {
+      "id": "cod4-arabic",
+      "name": "CoD4-Arabic-Tools",
+      "category": "تعريب الألعاب",
+      "icon": "🎯",
+      "description": "أداة ومثبّت تعريب قصة Call of Duty 4: Modern Warfare مع محرك تشكيل وربط الخط العربي لضمان ظهور الحوارات بشكل سليم داخل اللعبة.",
+      "repo": "Reda6Dev/CoD4-Arabic-Tools",
+      "fallbackVersion": "v1.7",
+      "tags": ["Python", "تعريب", "Modern Warfare"]
+    },
+    {
+      "id": "android-studio-arabic",
+      "name": "Android Studio Arabic Pack",
+      "category": "أدوات النظام والتطوير",
+      "icon": "🤖",
+      "description": "حزمة تعريب عربية شاملة لقوائم وإعدادات وحوارات بيئة التطوير Android Studio 2026.1.1 لمساعدة المطورين الناطقين بالعربية.",
+      "repo": "Reda6Dev/android-studio-arabic-language-pack",
+      "fallbackVersion": "v0.6-beta",
+      "tags": ["Android Studio", "i18n", "تعريب"]
+    }
+  ]
+}

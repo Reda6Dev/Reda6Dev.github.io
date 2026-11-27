@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REDA DEV | تطبيقات الأندرويد وأدوات الحاسوب والتعريب</title>
+  <meta name="description" content="الموقع الرسمي للمطور REDA DEV (Reda6Dev) — تطبيقات أندرويد مفتوحة المصدر مثل Atlas وGame Deals Hub، وأدوات الحاسوب وتعريب الألعاب.">
+  <meta property="og:title" content="REDA DEV | مشاريع Reda6Dev">
+  <meta property="og:description" content="تطبيقات أندرويد مجانية، أدوات ويندوز وتعريب، وقناة REDA DEV على يوتيوب.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://reda6dev.github.io">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark">R</span>
+        <span class="brand-text" id="nav-brand">REDA DEV</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="التنقل الرئيسي">
+        <a href="#apps">تطبيقات الأندرويد</a>
+        <a href="#tools">أدوات الحاسوب</a>
+        <a href="#youtube">قناة اليوتيوب</a>
+        <a id="nav-github" href="https://github.com/Reda6Dev" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="admin.html" class="btn-admin-pill">لوحة التحكم</a>
+      </nav>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-badge" id="hero-badge">تطبيقات أندرويد • أدوات ويندوز • تعريب الألعاب</div>
+        <h1 class="hero-title" id="hero-title">أهلاً بك في مساحة REDA DEV البرمجية</h1>
+        <p class="hero-subtitle" id="hero-subtitle">أطوّر تطبيقات أندرويد مفتوحة المصدر وأدوات سطح مكتب متخصصة في تعريب الألعاب والبرامج بدعم متكامل للغة العربية.</p>
+
+        <div class="hero-actions">
+          <a href="#apps" class="btn btn-primary">استكشف تطبيقات الأندرويد</a>
+          <a href="#tools" class="btn btn-secondary">تصفح أدوات الحاسوب</a>
+          <a id="hero-youtube-btn" href="https://www.youtube.com/@rk2003" target="_blank" rel="noopener noreferrer" class="btn btn-youtube">
+            <span aria-hidden="true">▶</span> قناة اليوتيوب
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-card">
+            <span class="stat-value" id="stat-apps">2</span>
+            <span class="stat-label">تطبيقات أندرويد</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value" id="stat-tools">7</span>
+            <span class="stat-label">أداة سطح مكتب وتعريب</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-value">100%</span>
+            <span class="stat-label">مجاني ومفتوح المصدر</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Android Apps -->
+    <section id="apps" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">الهواتف الذكية</span>
+            <h2 class="section-title">تطبيقات الأندرويد</h2>
+          </div>
+          <p class="section-desc">تطبيقات مجانية بواجهة عربية وتحديثات مباشرة من GitHub Releases.</p>
+        </div>
+
+        <div class="apps-grid" id="apps-container">
+          <div class="loading-box">جاري تحميل بيانات التطبيقات...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Desktop & Localization Tools -->
+    <section id="tools" class="section">
+      <div class="container">
+        <div class="section-head section-head-wrap">
+          <div>
+            <span class="section-kicker">ويندوز والتعريب</span>
+            <h2 class="section-title">أدوات الحاسوب والتعريب</h2>
+          </div>
+          <div class="filter-bar" id="tools-filter-bar" role="tablist" aria-label="تصنيف الأدوات">
+            <button type="button" class="filter-btn active" data-category="all">الكل</button>
+            <button type="button" class="filter-btn" data-category="تعريب الألعاب">تعريب الألعاب</button>
+            <button type="button" class="filter-btn" data-category="أدوات النظام والتطوير">أدوات النظام والتطوير</button>
+          </div>
+        </div>
+
+        <div class="tools-grid" id="tools-container">
+          <div class="loading-box">جاري تحميل قائمة الأدوات...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- YouTube Section -->
+    <section id="youtube" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">المحتوى المرئي</span>
+            <h2 class="section-title">قناة اليوتيوب <span class="ltr-inline" id="yt-handle-title">@rk2003</span></h2>
+          </div>
+          <p class="section-desc" id="yt-section-desc">شروحات التطبيقات والأدوات وتجارب التعريب مباشرة على يوتيوب.</p>
+        </div>
+
+        <div class="youtube-layout">
+          <div class="youtube-player-wrap glass-card" id="youtube-player-box">
+            <!-- Populated dynamically by app.js -->
+          </div>
+
+          <aside class="youtube-info-card glass-card">
+            <div class="yt-channel-badge">
+              <span class="yt-avatar">▶</span>
+              <div>
+                <h3 id="yt-channel-name">REDA DEV</h3>
+                <span class="ltr-inline muted" id="yt-channel-handle">@rk2003</span>
+              </div>
+            </div>
+            <p class="yt-bio" id="yt-bio">
+              تابع القناة لمشاهدة شروحات استخدام أدوات التعريب واستعراض تحديثات تطبيقات الأندرويد وأبرز المشاريع الجديدة.
+            </p>
+            <div class="yt-actions">
+              <a id="yt-subscribe-link" href="https://www.youtube.com/@rk2003?sub_confirmation=1" target="_blank" rel="noopener noreferrer" class="btn btn-youtube btn-block">
+                الاشتراك في القناة
+              </a>
+              <a id="yt-visit-link" href="https://www.youtube.com/@rk2003" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-block">
+                زيارة صفحة القناة على يوتيوب
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="section section-compact">
+      <div class="container">
+        <div class="about-banner glass-card">
+          <div>
+            <h3>عن المطوّر</h3>
+            <p id="about-bio">مطور مستقل أعمل على بناء تطبيقات أندرويد عملية بواجهة عربية كاملة، وأدوات مساعدة لنظام ويندوز.</p>
+          </div>
+          <div class="about-actions">
+            <a id="about-github-link" href="https://github.com/Reda6Dev" target="_blank" rel="noopener noreferrer" class="btn btn-primary">حساب GitHub</a>
+            <a href="admin.html" class="btn btn-secondary">إدارة الموقع</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="footer-year"></span> <strong id="footer-owner">Reda6Dev</strong> — جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="#apps">التطبيقات</a>
+        <a href="#tools">الأدوات</a>
+        <a href="#youtube">يوتيوب</a>
+        <a href="admin.html">لوحة التحكم</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="معاينة الصورة">
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="إغلاق">×</button>
+    <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="الصورة السابقة">‹</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+      <p id="lightbox-caption"></p>
+    </div>
+    <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="الصورة التالية">›</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

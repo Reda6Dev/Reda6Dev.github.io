@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم | REDA DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">R</span>
+        <span class="brand-text">REDA DEV • لوحة التحكم</span>
+      </a>
+      <nav class="nav-links" style="display:flex;">
+        <a href="index.html" class="btn btn-secondary btn-sm">العودة إلى الموقع</a>
+        <a href="https://github.com/Reda6Dev/Reda6Dev.github.io" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">مستودع الموقع</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container admin-main">
+    <section class="admin-header-card glass-card">
+      <div>
+        <h1>لوحة التحكم المرئية للموقع</h1>
+        <p>عدّل بياناتك، فيديوهات يوتيوب، تطبيقات الأندرويد، وأدوات الحاسوب ثم انشر مباشرة بضغطة زر.</p>
+      </div>
+      <div class="admin-actions-bar">
+        <button type="button" id="btn-reload" class="btn btn-secondary btn-sm">إعادة تحميل البيانات</button>
+        <button type="button" id="btn-download" class="btn btn-secondary btn-sm">تحميل site-config.json</button>
+        <button type="button" id="btn-publish" class="btn btn-emerald">حفظ ونشر التعديلات</button>
+      </div>
+    </section>
+
+    <!-- GitHub Token Card -->
+    <section class="admin-panel-card glass-card">
+      <h2>ربط النشر المباشر عبر GitHub</h2>
+      <p class="muted" style="margin-top:0;margin-bottom:14px;">
+        يُحفظ رمز <span class="ltr-inline">GitHub Token</span> داخل متصفحك فقط (<span class="ltr-inline">localStorage</span>) ولا يُرسل إلى أي طرف ثالث. يُستخدم فقط لتحديث ملف <span class="ltr-inline">site-config.json</span> في مستودع <span class="ltr-inline">Reda6Dev/Reda6Dev.github.io</span>.
+      </p>
+      <div class="token-row">
+        <input type="password" id="gh-token" class="input input-ltr" placeholder="ghp_... أو github_pat_...">
+        <button type="button" id="btn-toggle-token" class="btn btn-secondary btn-sm">إظهار / إخفاء</button>
+        <button type="button" id="btn-save-token" class="btn btn-primary btn-sm">حفظ الرمز محلياً</button>
+        <button type="button" id="btn-clear-token" class="btn btn-danger btn-sm">مسح الرمز</button>
+      </div>
+      <small id="token-status" class="muted" style="display:block;margin-top:10px;"></small>
+    </section>
+
+    <!-- Tabs -->
+    <div class="admin-tabs" role="tablist">
+      <button type="button" class="filter-btn active" data-tab="tab-site">الهوية واليوتيوب</button>
+      <button type="button" class="filter-btn" data-tab="tab-apps">تطبيقات الأندرويد</button>
+      <button type="button" class="filter-btn" data-tab="tab-tools">أدوات الحاسوب والتعريب</button>
+    </div>
+
+    <!-- Tab 1: Identity & YouTube -->
+    <section id="tab-site" class="admin-panel-card glass-card tab-pane">
+      <h2>معلومات الهوية وقناة اليوتيوب</h2>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="f-brandName">الاسم الظاهر في الشعار</label>
+          <input type="text" id="f-brandName" class="input input-ltr">
+        </div>
+        <div class="form-field">
+          <label for="f-owner">اسم المطور</label>
+          <input type="text" id="f-owner" class="input input-ltr">
+        </div>
+        <div class="form-field full">
+          <label for="f-heroBadge">الشريط العلوي في القسم الترحيبي</label>
+          <input type="text" id="f-heroBadge" class="input">
+        </div>
+        <div class="form-field full">
+          <label for="f-heroTitle">العنوان الرئيسي</label>
+          <input type="text" id="f-heroTitle" class="input">
+        </div>
+        <div class="form-field full">
+          <label for="f-heroSubtitle">العنوان الفرعي</label>
+          <textarea id="f-heroSubtitle" class="textarea"></textarea>
+        </div>
+        <div class="form-field full">
+          <label for="f-bio">النبذة التعريفية (عن المطور)</label>
+          <textarea id="f-bio" class="textarea"></textarea>
+        </div>
+        <div class="form-field">
+          <label for="f-githubUrl">رابط حساب GitHub</label>
+          <input type="url" id="f-githubUrl" class="input input-ltr">
+        </div>
+        <div class="form-field">
+          <label for="f-youtubeUrl">رابط قناة اليوتيوب</label>
+          <input type="url" id="f-youtubeUrl" class="input input-ltr">
+        </div>
+        <div class="form-field">
+          <label for="f-youtubeHandle">معرّف القناة (Handle)</label>
+          <input type="text" id="f-youtubeHandle" class="input input-ltr" placeholder="@rk2003">
+        </div>
+        <div class="form-field">
+          <label for="f-youtubeFeaturedVideoId">معرّف أو رابط الفيديو المميز على يوتيوب</label>
+          <input type="text" id="f-youtubeFeaturedVideoId" class="input input-ltr" placeholder="مثال: dQw4w9WgXcQ أو رابط الفيديو كاملاً">
+          <small>اتركه فارغاً إذا لم تنشر فيديو بعد، وسيعرض الموقع بطاقة القناة تلقائياً.</small>
+        </div>
+        <div class="form-field full">
+          <label for="f-youtubeDescription">وصف قسم اليوتيوب</label>
+          <textarea id="f-youtubeDescription" class="textarea"></textarea>
+        </div>
+      </div>
+
+      <div id="yt-preview-box" style="margin-top:18px;"></div>
+    </section>
+
+    <!-- Tab 2: Android Apps -->
+    <section id="tab-apps" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="section-bar-head">
+        <h2 style="margin:0;">تطبيقات الأندرويد</h2>
+        <button type="button" id="btn-add-app" class="btn btn-primary btn-sm">+ إضافة تطبيق جديد</button>
+      </div>
+      <div id="admin-apps-list"></div>
+    </section>
+
+    <!-- Tab 3: Desktop Tools -->
+    <section id="tab-tools" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="section-bar-head">
+        <h2 style="margin:0;">أدوات الحاسوب والتعريب</h2>
+        <button type="button" id="btn-add-tool" class="btn btn-primary btn-sm">+ إضافة أداة جديدة</button>
+      </div>
+      <div id="admin-tools-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
