@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم المتقدمة | REDA DEV</title>
+  <title>لوحة التحكم الشاملة | REDA DEV</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -15,13 +15,13 @@
 
   <header class="navbar">
     <div class="container nav-inner">
-      <a href="index.html" class="brand">
+      <a href="index.html" class="brand" id="admin-brand-link">
         <span class="brand-mark">R</span>
-        <span class="brand-text">REDA DEV • لوحة التحكم المتقدمة</span>
+        <span class="brand-text">REDA DEV • مركز التحكم الشامل</span>
       </a>
       <nav class="nav-links" style="display:flex;">
-        <a href="index.html" class="btn btn-secondary btn-sm">الموقع الرئيسي</a>
-        <a href="atlas.html" class="btn btn-secondary btn-sm">صفحة أطلس</a>
+        <a href="index.html" id="nav-site-link" class="btn btn-secondary btn-sm">الموقع الرئيسي</a>
+        <a href="atlas.html" id="nav-atlas-link" class="btn btn-secondary btn-sm">صفحة أطلس</a>
         <a href="https://github.com/Reda6Dev/Reda6Dev.github.io" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">المستودع</a>
       </nav>
     </div>
@@ -30,29 +30,89 @@
   <main class="container admin-main">
     <section class="admin-header-card glass-card">
       <div>
-        <h1>لوحة التحكم المتقدمة للموقع</h1>
-        <p>تحكّم بالمظهر، التطبيقات، الأدوات، فيديوهات اليوتيوب، ومركز مساعدة أطلس ثم انشر مباشرة بضغطة زر.</p>
+        <h1>مركز التحكم الشامل للموقع والإصدارات</h1>
+        <p>إدارة كاملة للمحتوى، المظهر، الإعلانات، SEO، التطبيقات، الوسائط، الإصدارات، ونظام التراجع بضغطة واحدة عبر GitHub API.</p>
       </div>
       <div class="admin-actions-bar">
+        <button type="button" id="btn-live-preview" class="btn btn-primary btn-sm">معاينة حيّة للموقع</button>
         <button type="button" id="btn-reload" class="btn btn-secondary btn-sm">إعادة تحميل</button>
-        <button type="button" id="btn-download" class="btn btn-secondary btn-sm">Export JSON</button>
+        <button type="button" id="btn-download" class="btn btn-secondary btn-sm">تصدير JSON</button>
         <button type="button" id="btn-publish" class="btn btn-emerald">حفظ ونشر التعديلات</button>
       </div>
     </section>
 
-    <!-- 6 Tabs -->
+    <!-- 8 Tabs -->
     <div class="admin-tabs" role="tablist">
-      <button type="button" class="filter-btn active" data-tab="tab-site">1. الإعدادات العامة والمظهر</button>
-      <button type="button" class="filter-btn" data-tab="tab-apps">2. تطبيقات الأندرويد</button>
-      <button type="button" class="filter-btn" data-tab="tab-tools">3. أدوات الحاسوب</button>
-      <button type="button" class="filter-btn" data-tab="tab-youtube">4. قناة اليوتيوب</button>
-      <button type="button" class="filter-btn" data-tab="tab-atlas-help">5. مركز مساعدة أطلس</button>
-      <button type="button" class="filter-btn" data-tab="tab-sync">6. الربط السريع والنسخ الاحتياطي</button>
+      <button type="button" class="filter-btn active" data-tab="tab-dashboard">1. الإحصائيات والنظرة العامة</button>
+      <button type="button" class="filter-btn" data-tab="tab-site">2. المحتوى والمظهر والـ SEO</button>
+      <button type="button" class="filter-btn" data-tab="tab-projects">3. التطبيقات والأدوات</button>
+      <button type="button" class="filter-btn" data-tab="tab-media">4. مدير الوسائط</button>
+      <button type="button" class="filter-btn" data-tab="tab-releases">5. ناشر الإصدارات</button>
+      <button type="button" class="filter-btn" data-tab="tab-content">6. اليوتيوب ومساعدة أطلس</button>
+      <button type="button" class="filter-btn" data-tab="tab-integrations">7. التواصل والإحصائيات</button>
+      <button type="button" class="filter-btn" data-tab="tab-security">8. الأمان وسجل التراجع</button>
     </div>
 
-    <!-- Tab 1: General Settings & Theme -->
-    <section id="tab-site" class="admin-panel-card glass-card tab-pane">
-      <h2>الإعدادات العامة وتخصيص الألوان</h2>
+    <!-- Tab 1: Dashboard -->
+    <section id="tab-dashboard" class="admin-panel-card glass-card tab-pane">
+      <div class="section-bar-head">
+        <div>
+          <h2 style="margin:0;">الإحصائيات والنظرة العامة</h2>
+          <small class="muted">إحصائيات التحميل الفعلية (<span class="ltr-inline">download_count</span>) لملفات APK وEXE من GitHub Releases.</small>
+        </div>
+        <button type="button" id="btn-refresh-stats" class="btn btn-primary btn-sm">تحديث الإحصائيات من GitHub</button>
+      </div>
+
+      <div class="dashboard-stats-grid" id="dashboard-kpis">
+        <div class="kpi-card">
+          <span class="kpi-label">إجمالي التحميلات</span>
+          <span class="kpi-value" id="kpi-downloads">...</span>
+          <span class="kpi-sub">من كافة الإصدارات</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">تطبيقات الأندرويد</span>
+          <span class="kpi-value" id="kpi-apps">-</span>
+          <span class="kpi-sub" id="kpi-apps-sub">ظاهر / إجمالي</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">أدوات الحاسوب والتعريب</span>
+          <span class="kpi-value" id="kpi-tools">-</span>
+          <span class="kpi-sub" id="kpi-tools-sub">ظاهر / إجمالي</span>
+        </div>
+        <div class="kpi-card">
+          <span class="kpi-label">مركز مساعدة أطلس</span>
+          <span class="kpi-value" id="kpi-help">-</span>
+          <span class="kpi-sub" id="kpi-help-sub">أقسام وأسئلة</span>
+        </div>
+      </div>
+
+      <div class="dashboard-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>المشروع</th>
+              <th>النوع</th>
+              <th>الحالة في الموقع</th>
+              <th>أحدث إصدار</th>
+              <th>تحميلات الأحدث</th>
+              <th>إجمالي التحميلات</th>
+              <th>تاريخ النشر</th>
+              <th>الرابط</th>
+            </tr>
+          </thead>
+          <tbody id="dashboard-repos-body">
+            <tr><td colspan="8" class="muted" style="text-align:center;">جاري جلب بيانات الإصدارات من GitHub...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Tab 2: Site, Theme, Announcement & SEO -->
+    <section id="tab-site" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="section-bar-head">
+        <h2 style="margin:0;">هوية الموقع والنصوص الأساسية</h2>
+        <button type="button" id="btn-live-preview-2" class="btn btn-primary btn-sm">معاينة حيّة للموقع</button>
+      </div>
       <div class="form-grid">
         <div class="form-field">
           <label for="f-brandName">الاسم الظاهر في الشعار</label>
@@ -113,92 +173,362 @@
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- Tab 2: Android Apps -->
-    <section id="tab-apps" class="admin-panel-card glass-card tab-pane" style="display:none;">
-      <div class="section-bar-head">
-        <h2 style="margin:0;">إدارة تطبيقات الأندرويد</h2>
-        <button type="button" id="btn-add-app" class="btn btn-primary btn-sm">+ إضافة تطبيق جديد</button>
-      </div>
-      <div id="admin-apps-list"></div>
-    </section>
-
-    <!-- Tab 3: Desktop Tools -->
-    <section id="tab-tools" class="admin-panel-card glass-card tab-pane" style="display:none;">
-      <div class="section-bar-head">
-        <h2 style="margin:0;">إدارة أدوات الحاسوب والتعريب</h2>
-        <button type="button" id="btn-add-tool" class="btn btn-primary btn-sm">+ إضافة أداة جديدة</button>
-      </div>
-      <div id="admin-tools-list"></div>
-    </section>
-
-    <!-- Tab 4: YouTube Channel -->
-    <section id="tab-youtube" class="admin-panel-card glass-card tab-pane" style="display:none;">
-      <h2>إدارة قناة اليوتيوب (@rk2003)</h2>
-      <div class="form-grid">
-        <div class="form-field">
-          <label for="f-youtubeUrl">رابط قناة اليوتيوب</label>
-          <input type="url" id="f-youtubeUrl" class="input input-ltr">
-        </div>
-        <div class="form-field">
-          <label for="f-youtubeHandle">معرّف القناة (Handle)</label>
-          <input type="text" id="f-youtubeHandle" class="input input-ltr" placeholder="@rk2003">
-        </div>
-        <div class="form-field">
-          <label for="f-youtubeChannelName">اسم القناة</label>
-          <input type="text" id="f-youtubeChannelName" class="input input-ltr">
-        </div>
-        <div class="form-field">
-          <label for="f-youtubeFeaturedVideoId">رابط أو معرّف الفيديو الرئيسي المميز</label>
-          <input type="text" id="f-youtubeFeaturedVideoId" class="input input-ltr" placeholder="الصق رابط يوتيوب كاملاً مثل https://youtu.be/...">
-          <small>يُستخرج <span class="ltr-inline">Video ID</span> تلقائياً من أي رابط يوتيوب.</small>
-        </div>
-        <div class="form-field full">
-          <label for="f-youtubeDescription">وصف قسم اليوتيوب</label>
-          <textarea id="f-youtubeDescription" class="textarea"></textarea>
-        </div>
-      </div>
-
-      <div id="yt-preview-box" style="margin-top:16px;"></div>
 
       <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
 
       <div class="section-bar-head">
         <div>
-          <h3 style="margin:0;">قائمة الفيديوهات المميزة الإضافية</h3>
-          <small class="muted">أضف عدة فيديوهات بلصق رابط كل فيديو ليظهر كقائمة تشغيل في الموقع.</small>
+          <h3 style="margin:0;">شريط الإعلانات العلوي</h3>
+          <small class="muted">يظهر أعلى الصفحة الرئيسية وصفحة أطلس عند تفعيله.</small>
         </div>
-        <button type="button" id="btn-add-yt-video" class="btn btn-primary btn-sm">+ إضافة فيديو</button>
+        <label class="switch-row">
+          <input type="checkbox" id="ann-enabled">
+          <span>تفعيل شريط الإعلانات في الموقع</span>
+        </label>
       </div>
-      <div id="admin-yt-videos-list"></div>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label for="ann-text">نص الإعلان</label>
+          <input type="text" id="ann-text" class="input" placeholder="مثال: إصدار جديد من تطبيق أطلس متاح الآن للتحميل المباشر!">
+        </div>
+        <div class="form-field">
+          <label for="ann-linkText">نص الزر (اختياري)</label>
+          <input type="text" id="ann-linkText" class="input" placeholder="استعرض التحديث">
+        </div>
+        <div class="form-field">
+          <label for="ann-linkUrl">رابط الزر</label>
+          <input type="text" id="ann-linkUrl" class="input input-ltr" placeholder="atlas.html أو https://...">
+        </div>
+        <div class="form-field">
+          <label for="ann-bg">لون خلفية الشريط</label>
+          <div class="color-picker-row">
+            <input type="color" id="ann-bg" class="color-input" value="#7c3aed">
+            <input type="text" id="ann-bg-hex" class="input input-ltr" value="#7c3aed">
+          </div>
+        </div>
+      </div>
+      <div id="ann-preview" class="mini-announcement-preview"></div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
+
+      <h3 style="margin:0 0 14px;">إعدادات محركات البحث والـ SEO والمشاركة</h3>
+      <div class="form-grid">
+        <div class="form-field full">
+          <label for="seo-title">عنوان الصفحة في Google (<span class="ltr-inline">Title &amp; og:title</span>)</label>
+          <input type="text" id="seo-title" class="input">
+        </div>
+        <div class="form-field full">
+          <label for="seo-desc">وصف الموقع في نتائج البحث (<span class="ltr-inline">Meta Description</span>)</label>
+          <textarea id="seo-desc" class="textarea"></textarea>
+        </div>
+        <div class="form-field">
+          <label for="seo-keywords">الكلمات المفتاحية (<span class="ltr-inline">Keywords</span>)</label>
+          <input type="text" id="seo-keywords" class="input">
+        </div>
+        <div class="form-field">
+          <label for="seo-ogImage">رابط صورة المشاركة (<span class="ltr-inline">og:image</span>)</label>
+          <input type="text" id="seo-ogImage" class="input input-ltr" placeholder="https://reda6dev.github.io/assets/icons/atlas-icon.png">
+        </div>
+      </div>
+      <div class="seo-snippet-preview">
+        <div class="seo-snippet-url">https://reda6dev.github.io</div>
+        <div class="seo-snippet-title" id="seo-preview-title">REDA DEV</div>
+        <p class="seo-snippet-desc" id="seo-preview-desc"></p>
+      </div>
     </section>
 
-    <!-- Tab 5: Atlas Help Center -->
-    <section id="tab-atlas-help" class="admin-panel-card glass-card tab-pane" style="display:none;">
+    <!-- Tab 3: Apps & Tools Management -->
+    <section id="tab-projects" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="sub-tabs">
+        <button type="button" class="filter-btn active" data-subtab="sub-apps">تطبيقات الأندرويد</button>
+        <button type="button" class="filter-btn" data-subtab="sub-tools">أدوات الحاسوب والتعريب</button>
+      </div>
+
+      <div id="sub-apps" class="subtab-pane">
+        <div class="section-bar-head">
+          <h2 style="margin:0;">إدارة تطبيقات الأندرويد</h2>
+          <button type="button" id="btn-add-app" class="btn btn-primary btn-sm">+ إضافة تطبيق جديد</button>
+        </div>
+        <div id="admin-apps-list"></div>
+      </div>
+
+      <div id="sub-tools" class="subtab-pane" style="display:none;">
+        <div class="section-bar-head">
+          <h2 style="margin:0;">إدارة أدوات الحاسوب والتعريب</h2>
+          <button type="button" id="btn-add-tool" class="btn btn-primary btn-sm">+ إضافة أداة جديدة</button>
+        </div>
+        <div id="admin-tools-list"></div>
+      </div>
+    </section>
+
+    <!-- Tab 4: Media Manager -->
+    <section id="tab-media" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <h2>مدير الوسائط (ضغط الصور ورفعها مباشرة للمستودع)</h2>
+      <p class="muted" style="margin-top:0;">
+        اختر أي صورة من جهازك ليتم ضغطها تلقائياً داخل المتصفح عبر <span class="ltr-inline">HTML5 Canvas</span> ثم رفعها إلى مجلد <span class="ltr-inline">assets/uploads/</span>.
+      </p>
+
+      <div id="media-dropzone" class="dropzone">
+        <div style="font-size:1.8rem;">🖼️</div>
+        <strong>اسحب الصورة هنا أو اضغط لاختيار صورة من الجهاز</strong>
+        <div class="muted" style="font-size:0.86rem;margin-top:4px;">يدعم PNG و JPG و WebP</div>
+        <input type="file" id="media-file-input" accept="image/*" style="display:none;">
+      </div>
+
+      <div class="form-grid" style="margin-top:16px;">
+        <div class="form-field">
+          <label for="media-filename">اسم الملف بعد الرفع داخل <span class="ltr-inline">assets/uploads/</span></label>
+          <input type="text" id="media-filename" class="input input-ltr" placeholder="screenshot-new.webp">
+        </div>
+        <div class="form-field">
+          <label for="media-format">صيغة الضغط</label>
+          <select id="media-format" class="select input-ltr">
+            <option value="image/webp">WebP (أفضل حجم وجودة)</option>
+            <option value="image/jpeg">JPEG</option>
+            <option value="image/png">PNG (دون فقد جودة)</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="media-maxwidth">أقصى عرض بالبكسل (0 = الحجم الأصلي)</label>
+          <input type="number" id="media-maxwidth" class="input input-ltr" value="1600" min="0" max="4096">
+        </div>
+        <div class="form-field">
+          <label for="media-quality">جودة الضغط (<span id="media-quality-val">0.82</span>)</label>
+          <input type="range" id="media-quality" min="0.4" max="1" step="0.02" value="0.82">
+        </div>
+      </div>
+
+      <div id="media-preview-area" style="display:none;margin-top:16px;" class="admin-item-card">
+        <div class="section-bar-head" style="margin-bottom:10px;">
+          <div id="media-size-info" class="muted" style="font-size:0.9rem;"></div>
+          <button type="button" id="btn-upload-media" class="btn btn-emerald btn-sm">رفع الصورة إلى GitHub الآن</button>
+        </div>
+        <img id="media-preview-img" src="" alt="معاينة الصورة المضغوطة" style="max-height:260px;margin-inline:auto;border-radius:10px;">
+      </div>
+
+      <div id="media-uploaded-result" style="display:none;margin-top:14px;" class="info-guide-box"></div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
+
       <div class="section-bar-head">
         <div>
-          <h2 style="margin:0;">أقسام مركز مساعدة أطلس</h2>
-          <small class="muted">تظهر هذه الأقسام مباشرة في صفحة <span class="ltr-inline">atlas.html</span>.</small>
+          <h3 style="margin:0;">الصور والملفات المرفوعة في المستودع</h3>
+          <small class="muted">اضغط لنسخ المسار الجاهز لاستخدامه في التطبيقات أو لقطات الشاشة.</small>
         </div>
-        <button type="button" id="btn-add-help-sec" class="btn btn-primary btn-sm">+ إضافة قسم مساعدة</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <select id="media-folder-select" class="select input-ltr" style="width:auto;">
+            <option value="assets/uploads">assets/uploads</option>
+            <option value="assets/icons">assets/icons</option>
+            <option value="assets/screenshots/atlas">assets/screenshots/atlas</option>
+            <option value="assets/screenshots/gamedealshub">assets/screenshots/gamedealshub</option>
+          </select>
+          <button type="button" id="btn-refresh-media" class="btn btn-secondary btn-sm">تحديث القائمة</button>
+        </div>
       </div>
-      <div id="admin-help-sections-list"></div>
-
-      <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
-
-      <div class="section-bar-head">
-        <h2 style="margin:0;">الأسئلة الشائعة (FAQ)</h2>
-        <button type="button" id="btn-add-faq" class="btn btn-primary btn-sm">+ إضافة سؤال وجواب</button>
+      <div id="media-gallery-grid" class="media-grid">
+        <div class="muted">جاري فحص المجلد...</div>
       </div>
-      <div id="admin-faqs-list"></div>
     </section>
 
-    <!-- Tab 6: Quick Connect & Backup -->
-    <section id="tab-sync" class="admin-panel-card glass-card tab-pane" style="display:none;">
+    <!-- Tab 5: Release Publisher -->
+    <section id="tab-releases" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <h2>ناشر الإصدارات المباشر (رفع APK و EXE و ZIP)</h2>
+      <p class="muted" style="margin-top:0;">
+        أنشئ إصداراً جديداً على <span class="ltr-inline">GitHub Releases</span> أو أرفق ملفاتك مباشرة من المتصفح دون الحاجة لفتح الموقع.
+      </p>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="rel-repo-select">اختر المستودع</label>
+          <select id="rel-repo-select" class="select input-ltr"></select>
+        </div>
+        <div class="form-field">
+          <label for="rel-repo-custom">أو اكتب مسار المستودع يدوياً (<span class="ltr-inline">owner/repo</span>)</label>
+          <input type="text" id="rel-repo-custom" class="input input-ltr" placeholder="Reda6Dev/Atlas">
+        </div>
+        <div class="form-field full">
+          <label>وضع النشر</label>
+          <div class="sub-tabs" style="margin-bottom:0;">
+            <button type="button" class="filter-btn active" data-relmode="new">إنشاء إصدار جديد (New Release)</button>
+            <button type="button" class="filter-btn" data-relmode="existing">إرفاق ملفات على إصدار موجود</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="rel-existing-box" style="display:none;margin-top:14px;">
+        <div class="form-grid">
+          <div class="form-field full">
+            <label for="rel-existing-select">اختر الإصدار الموجود</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <select id="rel-existing-select" class="select input-ltr" style="flex:1;"></select>
+              <button type="button" id="btn-load-existing-rels" class="btn btn-secondary btn-sm">جلب الإصدارات</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="rel-new-box" style="margin-top:14px;">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="rel-tag">رقم الإصدار (<span class="ltr-inline">Tag</span>)</label>
+            <input type="text" id="rel-tag" class="input input-ltr" placeholder="v1.3">
+          </div>
+          <div class="form-field">
+            <label for="rel-name">عنوان الإصدار</label>
+            <input type="text" id="rel-name" class="input" placeholder="الإصدار v1.3 — تحسينات وإصلاحات جديدة">
+          </div>
+          <div class="form-field full">
+            <label for="rel-body">ملاحظات التحديث (<span class="ltr-inline">Release Notes</span>)</label>
+            <textarea id="rel-body" class="textarea" placeholder="- إصلاحات وتحسينات في الأداء&#10;- دعم الميزات الجديدة"></textarea>
+          </div>
+          <div class="form-field">
+            <label class="switch-row">
+              <input type="checkbox" id="rel-prerelease">
+              <span>تحديده كإصدار تجريبي (<span class="ltr-inline">Pre-release</span>)</span>
+            </label>
+          </div>
+          <div class="form-field">
+            <label class="switch-row">
+              <input type="checkbox" id="rel-draft">
+              <span>حفظ كمسودة (<span class="ltr-inline">Draft</span>) دون نشر فوري</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" style="margin-top:14px;">
+        <div class="form-field full">
+          <label for="rel-files">اختر ملفات الإصدار (<span class="ltr-inline">.apk, .exe, .msi, .zip, .7z</span>)</label>
+          <input type="file" id="rel-files" class="input input-ltr" multiple>
+          <small id="rel-files-summary" class="muted">لم يتم اختيار ملفات بعد.</small>
+        </div>
+        <div class="form-field full">
+          <label class="switch-row">
+            <input type="checkbox" id="rel-sync-fallback" checked>
+            <span>تحديث رقم الإصدار الاحتياطي (<span class="ltr-inline">fallbackVersion</span>) في الموقع تلقائياً عند إنشاء إصدار جديد</span>
+          </label>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button type="button" id="btn-publish-release" class="btn btn-emerald">نشر الإصدار ورفع الملفات</button>
+        <a id="rel-github-page-link" href="https://github.com/Reda6Dev/Atlas/releases" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">فتح صفحة الإصدارات على GitHub</a>
+      </div>
+
+      <div id="rel-progress-area" style="display:none;margin-top:14px;">
+        <div id="rel-progress-text" class="muted" style="font-size:0.88rem;"></div>
+        <div class="upload-progress-wrap">
+          <div id="rel-progress-bar" class="upload-progress-bar"></div>
+        </div>
+      </div>
+      <div id="rel-result-box" style="display:none;margin-top:14px;" class="info-guide-box"></div>
+    </section>
+
+    <!-- Tab 6: YouTube & Atlas Help Center -->
+    <section id="tab-content" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="sub-tabs">
+        <button type="button" class="filter-btn active" data-subtab="sub-youtube">قناة اليوتيوب (@rk2003)</button>
+        <button type="button" class="filter-btn" data-subtab="sub-atlas-help">مركز مساعدة أطلس (10 أقسام + FAQ)</button>
+      </div>
+
+      <div id="sub-youtube" class="subtab-pane">
+        <h2>إدارة قناة اليوتيوب (<span class="ltr-inline">@rk2003</span>)</h2>
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="f-youtubeUrl">رابط قناة اليوتيوب</label>
+            <input type="url" id="f-youtubeUrl" class="input input-ltr">
+          </div>
+          <div class="form-field">
+            <label for="f-youtubeHandle">معرّف القناة (Handle)</label>
+            <input type="text" id="f-youtubeHandle" class="input input-ltr" placeholder="@rk2003">
+          </div>
+          <div class="form-field">
+            <label for="f-youtubeChannelName">اسم القناة</label>
+            <input type="text" id="f-youtubeChannelName" class="input input-ltr">
+          </div>
+          <div class="form-field">
+            <label for="f-youtubeFeaturedVideoId">رابط أو معرّف الفيديو الرئيسي المميز</label>
+            <input type="text" id="f-youtubeFeaturedVideoId" class="input input-ltr" placeholder="الصق رابط يوتيوب كاملاً مثل https://youtu.be/...">
+            <small>يُستخرج <span class="ltr-inline">Video ID</span> تلقائياً من أي رابط يوتيوب.</small>
+          </div>
+          <div class="form-field full">
+            <label for="f-youtubeDescription">وصف قسم اليوتيوب</label>
+            <textarea id="f-youtubeDescription" class="textarea"></textarea>
+          </div>
+        </div>
+
+        <div id="yt-preview-box" style="margin-top:16px;"></div>
+
+        <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
+
+        <div class="section-bar-head">
+          <div>
+            <h3 style="margin:0;">قائمة الفيديوهات المميزة الإضافية</h3>
+            <small class="muted">أضف عدة فيديوهات بلصق رابط كل فيديو ليظهر كقائمة تشغيل في الموقع.</small>
+          </div>
+          <button type="button" id="btn-add-yt-video" class="btn btn-primary btn-sm">+ إضافة فيديو</button>
+        </div>
+        <div id="admin-yt-videos-list"></div>
+      </div>
+
+      <div id="sub-atlas-help" class="subtab-pane" style="display:none;">
+        <div class="section-bar-head">
+          <div>
+            <h2 style="margin:0;">أقسام مركز مساعدة أطلس</h2>
+            <small class="muted">تظهر هذه الأقسام مباشرة في صفحة <span class="ltr-inline">atlas.html</span>.</small>
+          </div>
+          <button type="button" id="btn-add-help-sec" class="btn btn-primary btn-sm">+ إضافة قسم مساعدة</button>
+        </div>
+        <div id="admin-help-sections-list"></div>
+
+        <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
+
+        <div class="section-bar-head">
+          <h2 style="margin:0;">الأسئلة الشائعة (FAQ)</h2>
+          <button type="button" id="btn-add-faq" class="btn btn-primary btn-sm">+ إضافة سؤال وجواب</button>
+        </div>
+        <div id="admin-faqs-list"></div>
+      </div>
+    </section>
+
+    <!-- Tab 7: Contact & External Analytics -->
+    <section id="tab-integrations" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <h2>التواصل وإحصائيات الزوار الخارجية</h2>
+      <div class="form-grid">
+        <div class="form-field full">
+          <div class="section-bar-head" style="margin-bottom:4px;">
+            <label for="int-web3forms">مفتاح Web3Forms لنموذج التواصل في أسفل الموقع</label>
+            <span id="web3forms-badge" class="status-badge hidden">بديل تلقائي: GitHub Issues</span>
+          </div>
+          <input type="text" id="int-web3forms" class="input input-ltr" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+          <div class="info-guide-box">
+            للحصول على مفتاح مجاني: افتح <a href="https://web3forms.com" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:#a7f3d0;">web3forms.com</a> ← أدخل بريدك الإلكتروني ← انسخ <strong>Access Key</strong> الذي يصلك وألصقه هنا ثم اضغط «حفظ ونشر التعديلات». عند تركه فارغاً يعرض الموقع أزرار GitHub Issues تلقائياً.
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="int-goatcounter">رمز GoatCounter (مجاني بدون كوكيز)</label>
+          <input type="text" id="int-goatcounter" class="input input-ltr" placeholder="reda6dev">
+          <div class="info-guide-box">
+            سجّل مجاناً في <a href="https://www.goatcounter.com" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:#a7f3d0;">goatcounter.com</a> واكتب اسمك الفرعي فقط (الجزء قبل <span class="ltr-inline">.goatcounter.com</span>).
+          </div>
+        </div>
+
+        <div class="form-field">
+          <label for="int-cloudflare">رمز Cloudflare Web Analytics (اختياري)</label>
+          <input type="text" id="int-cloudflare" class="input input-ltr" placeholder="32-char hex token">
+          <div class="info-guide-box">
+            من لوحة <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;color:#a7f3d0;">Cloudflare Web Analytics</a> ← أضف نطاق <span class="ltr-inline">reda6dev.github.io</span> ثم انسخ قيمة الـ <span class="ltr-inline">token</span> فقط والصقها هنا.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 8: Security, Backup & 1-Click Rollback -->
+    <section id="tab-security" class="admin-panel-card glass-card tab-pane" style="display:none;">
       <h2>الربط السريع مع GitHub</h2>
       <p class="muted" style="margin-top:0;">
-        يُحفظ الرمز في متصفحك محلياً فقط (<span class="ltr-inline">localStorage</span>) لتفعيل زر «حفظ ونشر التعديلات».
+        يُحفظ الرمز في متصفحك محلياً فقط (<span class="ltr-inline">localStorage</span>) لتفعيل النشر ورفع الصور والإصدارات ونظام التراجع.
       </p>
 
       <div style="margin-bottom:14px;">
@@ -220,14 +550,42 @@
       <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
 
       <h2>النسخ الاحتياطي والاستيراد</h2>
-      <p class="muted" style="margin-top:0;">احتفظ بنسخة احتياطية كاملة من إعدادات الموقع أو استعدها في أي وقت.</p>
+      <p class="muted" style="margin-top:0;">احتفظ بنسخة احتياطية كاملة من إعدادات الموقع أو استعدها من جهازك في أي وقت.</p>
       <div class="admin-actions-bar">
         <button type="button" id="btn-export-json" class="btn btn-secondary">تصدير نسخة احتياطية (Export JSON)</button>
         <label for="import-json-input" class="btn btn-primary" style="cursor:pointer;">استيراد نسخة احتياطية (Import JSON)</label>
         <input type="file" id="import-json-input" accept=".json,application/json" style="display:none;">
       </div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
+
+      <div class="section-bar-head">
+        <div>
+          <h2 style="margin:0;">سجل التراجع بضغطة واحدة (1-Click Rollback)</h2>
+          <small class="muted">آخر 10 تعديلات محفوظة لملف <span class="ltr-inline">site-config.json</span> على GitHub.</small>
+        </div>
+        <button type="button" id="btn-load-commits" class="btn btn-secondary btn-sm">تحديث السجل</button>
+      </div>
+      <div id="commits-history-list" class="commit-list">
+        <div class="muted">جاري تحميل آخر 10 تعديلات...</div>
+      </div>
     </section>
   </main>
+
+  <!-- Live Preview Modal -->
+  <div id="preview-modal" class="preview-modal" aria-hidden="true" role="dialog" aria-label="معاينة حية للموقع">
+    <div class="preview-modal-bar">
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <strong>المعاينة الحيّة للموقع (مسودة التعديلات الحالية)</strong>
+        <button type="button" id="preview-desktop-btn" class="filter-btn active">شاشة حاسوب</button>
+        <button type="button" id="preview-mobile-btn" class="filter-btn">شاشة جوال (390px)</button>
+      </div>
+      <button type="button" id="preview-close-btn" class="btn btn-danger btn-sm">إغلاق المعاينة</button>
+    </div>
+    <div class="preview-frame-wrap">
+      <iframe id="preview-iframe" class="preview-frame" title="معاينة الموقع"></iframe>
+    </div>
+  </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 

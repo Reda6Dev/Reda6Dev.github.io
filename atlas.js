@@ -35,6 +35,57 @@
     if (/^#[0-9a-fA-F]{6}$/.test(theme.emerald || "")) root.style.setProperty("--emerald", theme.emerald);
   }
 
+  function applyAnnouncement(ann) {
+    const bar = document.getElementById("announcement-bar");
+    if (!bar) return;
+    if (!ann || !ann.enabled || !String(ann.text || "").trim()) {
+      bar.hidden = true;
+      bar.innerHTML = "";
+      return;
+    }
+    const bg = /^#[0-9a-fA-F]{6}$/.test(ann.bgColor || "") ? ann.bgColor : "#7c3aed";
+    const linkHref = safeUrl(ann.linkUrl, "");
+    const linkHtml =
+      ann.linkText && linkHref
+        ? `<a class="announcement-link" href="${escapeHtml(linkHref)}"${/^https?:\/\//i.test(linkHref) ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(ann.linkText)}</a>`
+        : "";
+    bar.style.setProperty("--announcement-bg", bg);
+    bar.innerHTML = `
+      <div class="container announcement-inner">
+        <span class="announcement-text">${escapeHtml(ann.text)}</span>
+        ${linkHtml}
+        <button type="button" class="announcement-close" aria-label="إغلاق الإعلان">×</button>
+      </div>
+    `;
+    bar.hidden = false;
+    const closeBtn = bar.querySelector(".announcement-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        bar.hidden = true;
+      });
+    }
+  }
+
+  function applyAnalytics(analytics) {
+    if (!analytics) return;
+    const gc = String(analytics.goatcounterCode || "").trim();
+    if (/^[a-zA-Z0-9_-]+$/.test(gc) && !document.querySelector("script[data-goatcounter]")) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://gc.zgo.at/count.js";
+      s.setAttribute("data-goatcounter", `https://${gc}.goatcounter.com/count`);
+      document.head.appendChild(s);
+    }
+    const cf = String(analytics.cloudflareToken || "").trim();
+    if (/^[a-fA-F0-9]+$/.test(cf) && !document.querySelector("script[data-cf-beacon]")) {
+      const s = document.createElement("script");
+      s.defer = true;
+      s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      s.setAttribute("data-cf-beacon", JSON.stringify({ token: cf }));
+      document.head.appendChild(s);
+    }
+  }
+
   function formatSize(bytes) {
     if (!bytes || Number.isNaN(bytes)) return "";
     const mb = bytes / (1024 * 1024);
@@ -314,6 +365,8 @@
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const cfg = await res.json();
       applyTheme(cfg.theme);
+      applyAnnouncement(cfg.announcement);
+      applyAnalytics(cfg.analytics);
 
       const site = cfg.site || {};
       document.getElementById("atlas-nav-brand").textContent = site.brandName || "REDA DEV";

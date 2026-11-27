@@ -32,6 +32,81 @@
     return fallback;
   }
 
+  function setMetaContent(selector, value) {
+    if (!value) return;
+    const el = document.querySelector(selector);
+    if (el) el.setAttribute("content", value);
+  }
+
+  function applySeo(seo) {
+    if (!seo) return;
+    if (seo.metaTitle) {
+      document.title = seo.metaTitle;
+      setMetaContent('meta[property="og:title"]', seo.metaTitle);
+    }
+    if (seo.metaDescription) {
+      setMetaContent('meta[name="description"]', seo.metaDescription);
+      setMetaContent('meta[property="og:description"]', seo.metaDescription);
+    }
+    if (seo.keywords) {
+      setMetaContent('meta[name="keywords"]', seo.keywords);
+    }
+    if (seo.ogImage) {
+      setMetaContent('meta[property="og:image"]', seo.ogImage);
+    }
+  }
+
+  function applyAnnouncement(ann) {
+    const bar = document.getElementById("announcement-bar");
+    if (!bar) return;
+    if (!ann || !ann.enabled || !String(ann.text || "").trim()) {
+      bar.hidden = true;
+      bar.innerHTML = "";
+      return;
+    }
+    const bg = /^#[0-9a-fA-F]{6}$/.test(ann.bgColor || "") ? ann.bgColor : "#7c3aed";
+    const linkHref = safeUrl(ann.linkUrl, "");
+    const linkHtml =
+      ann.linkText && linkHref
+        ? `<a class="announcement-link" href="${escapeHtml(linkHref)}"${/^https?:\/\//i.test(linkHref) ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(ann.linkText)}</a>`
+        : "";
+    bar.style.setProperty("--announcement-bg", bg);
+    bar.innerHTML = `
+      <div class="container announcement-inner">
+        <span class="announcement-text">${escapeHtml(ann.text)}</span>
+        ${linkHtml}
+        <button type="button" class="announcement-close" aria-label="إغلاق الإعلان">×</button>
+      </div>
+    `;
+    bar.hidden = false;
+    const closeBtn = bar.querySelector(".announcement-close");
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        bar.hidden = true;
+      });
+    }
+  }
+
+  function applyAnalytics(analytics, isPreview) {
+    if (!analytics || isPreview) return;
+    const gc = String(analytics.goatcounterCode || "").trim();
+    if (/^[a-zA-Z0-9_-]+$/.test(gc) && !document.querySelector("script[data-goatcounter]")) {
+      const s = document.createElement("script");
+      s.async = true;
+      s.src = "https://gc.zgo.at/count.js";
+      s.setAttribute("data-goatcounter", `https://${gc}.goatcounter.com/count`);
+      document.head.appendChild(s);
+    }
+    const cf = String(analytics.cloudflareToken || "").trim();
+    if (/^[a-fA-F0-9]+$/.test(cf) && !document.querySelector("script[data-cf-beacon]")) {
+      const s = document.createElement("script");
+      s.defer = true;
+      s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      s.setAttribute("data-cf-beacon", JSON.stringify({ token: cf }));
+      document.head.appendChild(s);
+    }
+  }
+
   function applyTheme(theme) {
     if (!theme) return;
     const root = document.documentElement;
@@ -239,14 +314,15 @@
 
   function renderApps(apps) {
     const container = document.getElementById("apps-container");
-    document.getElementById("stat-apps").textContent = String(apps.length);
+    const visibleApps = (apps || []).filter((a) => a && a.visible !== false);
+    document.getElementById("stat-apps").textContent = String(visibleApps.length);
 
-    if (!apps.length) {
-      container.innerHTML = `<div class="loading-box">لا توجد تطبيقات مضافة حالياً.</div>`;
+    if (!visibleApps.length) {
+      container.innerHTML = `<div class="loading-box">لا توجد تطبيقات معروضة حالياً.</div>`;
       return;
     }
 
-    container.innerHTML = apps
+    container.innerHTML = visibleApps
       .map((app, appIndex) => {
         const iconHtml = app.icon
           ? `<img class="app-icon" src="${escapeHtml(safeUrl(app.icon))}" alt="${escapeHtml(app.name)}" loading="lazy">`
@@ -313,14 +389,14 @@
       btn.addEventListener("click", () => {
         const aIdx = Number(btn.dataset.appIndex);
         const sIdx = Number(btn.dataset.shotIndex);
-        const app = siteConfig.androidApps[aIdx];
+        const app = visibleApps[aIdx];
         if (app && Array.isArray(app.screenshots)) {
           openLightbox(app.screenshots, sIdx);
         }
       });
     });
 
-    apps.forEach(async (app, idx) => {
+    visibleApps.forEach(async (app, idx) => {
       const rel = await fetchLatestRelease(app.repo);
       const verEl = document.getElementById(`ver-app-${idx}`);
       const dlEl = document.getElementById(`dl-app-${idx}`);
@@ -346,12 +422,13 @@
 
   function renderTools(tools) {
     const container = document.getElementById("tools-container");
-    document.getElementById("stat-tools").textContent = String(tools.length);
+    const visibleTools = (tools || []).filter((t) => t && t.visible !== false);
+    document.getElementById("stat-tools").textContent = String(visibleTools.length);
 
     const filtered =
       currentFilter === "all"
-        ? tools
-        : tools.filter((t) => t.category === currentFilter);
+        ? visibleTools
+        : visibleTools.filter((t) => t.category === currentFilter);
 
     if (!filtered.length) {
       container.innerHTML = `<div class="loading-box">لا توجد أدوات ضمن هذا التصنيف حالياً.</div>`;
@@ -492,20 +569,146 @@
     });
   }
 
+  function renderContactSection(cfg) {
+    const box = document.getElementById("contact-box");
+    if (!box) return;
+    const accessKey = String((cfg.analytics && cfg.analytics.web3formsAccessKey) || "").trim();
+    const githubUrl = safeUrl(cfg.site && cfg.site.githubUrl, "https://github.com/Reda6Dev");
+
+    if (!accessKey) {
+      box.innerHTML = `
+        <div class="contact-fallback">
+          <div>
+            <h3 style="margin:0 0 6px;">افتح بلاغاً أو اقترح ميزة مباشرة عبر GitHub</h3>
+            <p>يمكنك إرسال ملاحظاتك أو الإبلاغ عن أي مشكلة تقنية عبر صفحة البلاغات الرسمية (Issues) ليتم تتبّعها والرد عليك مباشرة.</p>
+          </div>
+          <div class="about-actions">
+            <a href="https://github.com/Reda6Dev/Atlas/issues" target="_blank" rel="noopener noreferrer" class="btn btn-primary">مشاكل واقتراحات Atlas</a>
+            <a href="https://github.com/Reda6Dev/GameDealsHub/issues" target="_blank" rel="noopener noreferrer" class="btn btn-emerald">مشاكل Game Deals Hub</a>
+            <a href="${escapeHtml(githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">بقية المستودعات على GitHub</a>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
+    const projectOptions = [
+      ...(cfg.androidApps || []).map((a) => a.name).filter(Boolean),
+      ...(cfg.desktopTools || []).map((t) => t.name).filter(Boolean),
+    ];
+
+    box.innerHTML = `
+      <form id="contact-form" class="contact-form">
+        <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="cf-name">الاسم</label>
+            <input type="text" id="cf-name" class="input" required placeholder="اسمك الكريم">
+          </div>
+          <div class="form-field">
+            <label for="cf-email">البريد الإلكتروني</label>
+            <input type="email" id="cf-email" class="input input-ltr" required placeholder="name@example.com">
+          </div>
+          <div class="form-field full">
+            <label for="cf-subject">المشروع أو الموضوع</label>
+            <select id="cf-subject" class="select">
+              <option value="استفسار عام / اقتراح">استفسار عام / اقتراح</option>
+              ${projectOptions.map((n) => `<option value="${escapeHtml(n)}">${escapeHtml(n)}</option>`).join("")}
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="cf-message">الرسالة أو تفاصيل المشكلة</label>
+            <textarea id="cf-message" class="textarea" required placeholder="اكتب رسالتك أو تفاصيل المشكلة بوضوح..."></textarea>
+          </div>
+        </div>
+        <div class="about-actions" style="justify-content:space-between;align-items:center;">
+          <button type="submit" id="cf-submit" class="btn btn-emerald">إرسال الرسالة</button>
+          <a href="${escapeHtml(githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">أو عبر GitHub Issues</a>
+        </div>
+        <div id="cf-status" class="contact-status" role="status" aria-live="polite"></div>
+      </form>
+    `;
+
+    const form = document.getElementById("contact-form");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const statusEl = document.getElementById("cf-status");
+      const btn = document.getElementById("cf-submit");
+      const botcheck = form.querySelector('input[name="botcheck"]');
+      if (botcheck && botcheck.checked) return;
+
+      btn.disabled = true;
+      btn.textContent = "جاري الإرسال...";
+      statusEl.className = "contact-status";
+      statusEl.textContent = "";
+
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: accessKey,
+            from_name: "REDA DEV Website",
+            name: document.getElementById("cf-name").value.trim(),
+            email: document.getElementById("cf-email").value.trim(),
+            subject: `[REDA DEV] ${document.getElementById("cf-subject").value}`,
+            message: document.getElementById("cf-message").value.trim(),
+            botcheck: false,
+          }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || !data.success) {
+          throw new Error(data.message || `HTTP ${res.status}`);
+        }
+        statusEl.className = "contact-status ok";
+        statusEl.textContent = "تم إرسال رسالتك بنجاح! سأرد عليك في أقرب وقت.";
+        form.reset();
+      } catch (err) {
+        statusEl.className = "contact-status err";
+        statusEl.textContent = `تعذّر إرسال الرسالة حالياً (${err.message}). يمكنك المراسلة عبر GitHub Issues.`;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "إرسال الرسالة";
+      }
+    });
+  }
+
   async function init() {
     setupMobileNav();
     setupFilters();
     setupLightbox();
 
+    let isPreview = false;
     try {
-      const res = await fetch(`site-config.json?t=${Date.now()}`, { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      siteConfig = await res.json();
+      const params = new URLSearchParams(window.location.search);
+      isPreview = params.get("preview") === "1";
+    } catch (_) {}
+
+    try {
+      if (isPreview) {
+        const draftRaw = localStorage.getItem("reda6dev_preview_config");
+        if (draftRaw) {
+          siteConfig = JSON.parse(draftRaw);
+          const banner = document.createElement("div");
+          banner.className = "preview-banner";
+          banner.textContent = "وضع المعاينة الحيّة من لوحة التحكم — التعديلات المعروضة لم تُنشر بعد.";
+          document.body.prepend(banner);
+        }
+      }
+      if (!siteConfig) {
+        const res = await fetch(`site-config.json?t=${Date.now()}`, { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        siteConfig = await res.json();
+      }
       applyTheme(siteConfig.theme);
+      applySeo(siteConfig.seo);
+      applyAnnouncement(siteConfig.announcement);
+      applyAnalytics(siteConfig.analytics, isPreview);
       renderHeaderAndHero(siteConfig.site || {});
       renderApps(siteConfig.androidApps || []);
       renderTools(siteConfig.desktopTools || []);
       renderYouTubeSection(siteConfig.site || {});
+      renderContactSection(siteConfig);
     } catch (err) {
       document.getElementById("apps-container").innerHTML =
         `<div class="loading-box">تعذّر تحميل ملف البيانات site-config.json (${escapeHtml(err.message)}).</div>`;
