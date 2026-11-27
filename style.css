@@ -630,6 +630,289 @@ select {
   border: 1px solid var(--border);
   font-size: 1.35rem;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.tool-emoji-img {
+  padding: 5px;
+}
+
+.tool-emoji-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* YouTube playlist chips */
+.yt-playlist-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.yt-playlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.yt-vid-chip {
+  padding: 6px 12px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.yt-vid-chip.active {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.5);
+  color: #fecaca;
+}
+
+/* Atlas Page & Help Center */
+.atlas-hero {
+  padding: 48px 0 24px;
+}
+
+.atlas-hero-card {
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.atlas-hero-icon {
+  width: 112px;
+  height: 112px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  flex-shrink: 0;
+}
+
+.atlas-hero-content {
+  flex: 1;
+}
+
+.atlas-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.atlas-title-wrap h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  font-weight: 800;
+}
+
+.atlas-showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  align-items: stretch;
+}
+
+.help-search-wrap {
+  min-width: min(340px, 100%);
+}
+
+.help-layout {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.help-sidebar {
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  position: sticky;
+  top: 86px;
+}
+
+.help-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: right;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.94rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.help-nav-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.help-nav-btn.active {
+  background: var(--accent-soft);
+  border-color: rgba(139, 92, 246, 0.45);
+  color: #fff;
+}
+
+.help-content-area {
+  display: grid;
+  gap: 16px;
+}
+
+.help-article {
+  padding: 26px;
+}
+
+.help-article-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.help-article-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  border: 1px solid rgba(139, 92, 246, 0.35);
+  font-size: 1.45rem;
+  flex-shrink: 0;
+}
+
+.help-article-head h3 {
+  margin: 0 0 2px;
+  font-size: 1.3rem;
+}
+
+.help-article-head p {
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.help-steps-list {
+  margin: 0;
+  padding-inline-start: 22px;
+  display: grid;
+  gap: 12px;
+  color: #e5e7eb;
+}
+
+.help-steps-list li {
+  line-height: 1.85;
+}
+
+.faq-list {
+  display: grid;
+  gap: 12px;
+}
+
+.faq-item {
+  padding: 16px 20px;
+}
+
+.faq-q {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 1.04rem;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.faq-q::after {
+  content: "+";
+  color: var(--emerald);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.faq-item[open] .faq-q::after {
+  content: "−";
+}
+
+.faq-a {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  color: var(--text-muted);
+}
+
+/* Color Picker & Order Controls in Admin */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-input {
+  width: 52px;
+  height: 42px;
+  padding: 3px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(8, 12, 22, 0.85);
+  cursor: pointer;
+}
+
+.admin-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  background: var(--emerald-soft);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.user-pill img {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+}
+
+@media (max-width: 920px) {
+  .atlas-hero-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .atlas-showcase-grid,
+  .help-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .help-sidebar {
+    position: static;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
 }
 
 .tool-name {

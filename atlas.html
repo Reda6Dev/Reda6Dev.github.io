@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas (أطلس) | الصفحة الرسمية ومركز المساعدة</title>
+  <meta name="description" content="تطبيق Atlas (أطلس) لقراءة المانجا والمانهوا على أندرويد بواجهة عربية كاملة — التحميل المباشر ومركز المساعدة والأسئلة الشائعة.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">R</span>
+        <span class="brand-text" id="atlas-nav-brand">REDA DEV</span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="التنقل في صفحة أطلس">
+        <a href="index.html">الرئيسية</a>
+        <a href="#features">المميزات واللقطات</a>
+        <a href="#help">مركز المساعدة</a>
+        <a href="#faq">الأسئلة الشائعة</a>
+        <a href="https://github.com/Reda6Dev/Atlas" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+
+      <button type="button" class="nav-toggle" id="nav-toggle" aria-label="فتح القائمة" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Atlas Hero -->
+    <section class="atlas-hero">
+      <div class="container">
+        <div class="atlas-hero-card glass-card">
+          <img id="atlas-hero-icon" class="atlas-hero-icon" src="assets/icons/atlas-icon.png" alt="أيقونة تطبيق Atlas">
+          <div class="atlas-hero-content">
+            <div class="atlas-title-wrap">
+              <h1 id="atlas-hero-title">Atlas (أطلس)</h1>
+              <span class="version-badge" id="atlas-version-badge">v1.14.6</span>
+            </div>
+            <p class="app-tagline" id="atlas-hero-tagline">قارئ مانجا ومانهوا مفتوح المصدر بواجهة عربية كاملة</p>
+            <p class="app-desc" id="atlas-hero-desc">
+              تطبيق أندرويد مجاني ومفتوح المصدر يرتكز على أساس Mihon / TachiyomiSY بهوية بصرية مخصصة وتعريب شامل للواجهة والإعدادات.
+            </p>
+            <div class="hero-actions" style="justify-content:flex-start;margin-bottom:10px;">
+              <a id="atlas-dl-btn" href="https://github.com/Reda6Dev/Atlas/releases" target="_blank" rel="noopener noreferrer" class="btn btn-emerald">
+                تحميل APK المباشر
+              </a>
+              <a href="#help" class="btn btn-primary">تصفح مركز المساعدة</a>
+              <a href="https://github.com/Reda6Dev/Atlas/releases" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                صفحة الإصدارات
+              </a>
+              <a href="index.html" class="btn btn-secondary">العودة للموقع الرئيسي</a>
+            </div>
+            <div class="apk-meta" id="atlas-apk-meta">جاري التحقق من أحدث ملف APK من مستودع Reda6Dev/Atlas...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Screenshots & Highlights -->
+    <section id="features" class="section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">نظرة عن قرب</span>
+            <h2 class="section-title">لقطات الشاشة وأبرز المميزات</h2>
+          </div>
+          <p class="section-desc">اضغط على أي صورة لتكبيرها واستعراض واجهة أطلس العربية.</p>
+        </div>
+
+        <div class="atlas-showcase-grid">
+          <div class="glass-card" style="padding:20px;">
+            <div class="app-gallery" id="atlas-shots-grid"></div>
+          </div>
+          <div class="glass-card" style="padding:24px;">
+            <h3 style="margin-top:0;">ماذا يميّز أطلس؟</h3>
+            <ul class="features-list" id="atlas-features-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Help Center -->
+    <section id="help" class="section">
+      <div class="container">
+        <div class="section-head section-head-wrap">
+          <div>
+            <span class="section-kicker">الدليل العربي الرسمي</span>
+            <h2 class="section-title">مركز مساعدة وتوثيق أطلس</h2>
+          </div>
+          <div class="help-search-wrap">
+            <input type="search" id="help-search" class="input" placeholder="ابحث في المساعدة والأسئلة الشائعة...">
+          </div>
+        </div>
+
+        <div class="help-layout">
+          <aside class="help-sidebar glass-card" id="help-sidebar" aria-label="أقسام المساعدة"></aside>
+          <div class="help-content-area" id="help-content-area">
+            <div class="loading-box">جاري تحميل مركز المساعدة...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section id="faq" class="section section-compact">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">إجابات سريعة</span>
+            <h2 class="section-title">الأسئلة الشائعة (FAQ)</h2>
+          </div>
+        </div>
+        <div class="faq-list" id="faq-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p>© <span id="footer-year"></span> <strong id="footer-owner">Reda6Dev</strong> — جميع الحقوق محفوظة.</p>
+      <div class="footer-links">
+        <a href="index.html">الموقع الرئيسي</a>
+        <a href="#help">مركز المساعدة</a>
+        <a href="https://github.com/Reda6Dev/Atlas" target="_blank" rel="noopener noreferrer">مستودع Atlas</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="معاينة الصورة">
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="إغلاق">×</button>
+    <button type="button" class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="الصورة السابقة">‹</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="">
+      <p id="lightbox-caption"></p>
+    </div>
+    <button type="button" class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="الصورة التالية">›</button>
+  </div>
+
+  <script src="atlas.js"></script>
+</body>
+</html>

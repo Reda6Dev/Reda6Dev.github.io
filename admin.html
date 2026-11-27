@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة التحكم | REDA DEV</title>
+  <title>لوحة التحكم المتقدمة | REDA DEV</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -17,11 +17,12 @@
     <div class="container nav-inner">
       <a href="index.html" class="brand">
         <span class="brand-mark">R</span>
-        <span class="brand-text">REDA DEV • لوحة التحكم</span>
+        <span class="brand-text">REDA DEV • لوحة التحكم المتقدمة</span>
       </a>
       <nav class="nav-links" style="display:flex;">
-        <a href="index.html" class="btn btn-secondary btn-sm">العودة إلى الموقع</a>
-        <a href="https://github.com/Reda6Dev/Reda6Dev.github.io" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">مستودع الموقع</a>
+        <a href="index.html" class="btn btn-secondary btn-sm">الموقع الرئيسي</a>
+        <a href="atlas.html" class="btn btn-secondary btn-sm">صفحة أطلس</a>
+        <a href="https://github.com/Reda6Dev/Reda6Dev.github.io" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">المستودع</a>
       </nav>
     </div>
   </header>
@@ -29,41 +30,29 @@
   <main class="container admin-main">
     <section class="admin-header-card glass-card">
       <div>
-        <h1>لوحة التحكم المرئية للموقع</h1>
-        <p>عدّل بياناتك، فيديوهات يوتيوب، تطبيقات الأندرويد، وأدوات الحاسوب ثم انشر مباشرة بضغطة زر.</p>
+        <h1>لوحة التحكم المتقدمة للموقع</h1>
+        <p>تحكّم بالمظهر، التطبيقات، الأدوات، فيديوهات اليوتيوب، ومركز مساعدة أطلس ثم انشر مباشرة بضغطة زر.</p>
       </div>
       <div class="admin-actions-bar">
-        <button type="button" id="btn-reload" class="btn btn-secondary btn-sm">إعادة تحميل البيانات</button>
-        <button type="button" id="btn-download" class="btn btn-secondary btn-sm">تحميل site-config.json</button>
+        <button type="button" id="btn-reload" class="btn btn-secondary btn-sm">إعادة تحميل</button>
+        <button type="button" id="btn-download" class="btn btn-secondary btn-sm">Export JSON</button>
         <button type="button" id="btn-publish" class="btn btn-emerald">حفظ ونشر التعديلات</button>
       </div>
     </section>
 
-    <!-- GitHub Token Card -->
-    <section class="admin-panel-card glass-card">
-      <h2>ربط النشر المباشر عبر GitHub</h2>
-      <p class="muted" style="margin-top:0;margin-bottom:14px;">
-        يُحفظ رمز <span class="ltr-inline">GitHub Token</span> داخل متصفحك فقط (<span class="ltr-inline">localStorage</span>) ولا يُرسل إلى أي طرف ثالث. يُستخدم فقط لتحديث ملف <span class="ltr-inline">site-config.json</span> في مستودع <span class="ltr-inline">Reda6Dev/Reda6Dev.github.io</span>.
-      </p>
-      <div class="token-row">
-        <input type="password" id="gh-token" class="input input-ltr" placeholder="ghp_... أو github_pat_...">
-        <button type="button" id="btn-toggle-token" class="btn btn-secondary btn-sm">إظهار / إخفاء</button>
-        <button type="button" id="btn-save-token" class="btn btn-primary btn-sm">حفظ الرمز محلياً</button>
-        <button type="button" id="btn-clear-token" class="btn btn-danger btn-sm">مسح الرمز</button>
-      </div>
-      <small id="token-status" class="muted" style="display:block;margin-top:10px;"></small>
-    </section>
-
-    <!-- Tabs -->
+    <!-- 6 Tabs -->
     <div class="admin-tabs" role="tablist">
-      <button type="button" class="filter-btn active" data-tab="tab-site">الهوية واليوتيوب</button>
-      <button type="button" class="filter-btn" data-tab="tab-apps">تطبيقات الأندرويد</button>
-      <button type="button" class="filter-btn" data-tab="tab-tools">أدوات الحاسوب والتعريب</button>
+      <button type="button" class="filter-btn active" data-tab="tab-site">1. الإعدادات العامة والمظهر</button>
+      <button type="button" class="filter-btn" data-tab="tab-apps">2. تطبيقات الأندرويد</button>
+      <button type="button" class="filter-btn" data-tab="tab-tools">3. أدوات الحاسوب</button>
+      <button type="button" class="filter-btn" data-tab="tab-youtube">4. قناة اليوتيوب</button>
+      <button type="button" class="filter-btn" data-tab="tab-atlas-help">5. مركز مساعدة أطلس</button>
+      <button type="button" class="filter-btn" data-tab="tab-sync">6. الربط السريع والنسخ الاحتياطي</button>
     </div>
 
-    <!-- Tab 1: Identity & YouTube -->
+    <!-- Tab 1: General Settings & Theme -->
     <section id="tab-site" class="admin-panel-card glass-card tab-pane">
-      <h2>معلومات الهوية وقناة اليوتيوب</h2>
+      <h2>الإعدادات العامة وتخصيص الألوان</h2>
       <div class="form-grid">
         <div class="form-field">
           <label for="f-brandName">الاسم الظاهر في الشعار</label>
@@ -89,10 +78,65 @@
           <label for="f-bio">النبذة التعريفية (عن المطور)</label>
           <textarea id="f-bio" class="textarea"></textarea>
         </div>
-        <div class="form-field">
+        <div class="form-field full">
           <label for="f-githubUrl">رابط حساب GitHub</label>
           <input type="url" id="f-githubUrl" class="input input-ltr">
         </div>
+      </div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
+
+      <div class="section-bar-head">
+        <h3 style="margin:0;">تخصيص ألوان الموقع</h3>
+        <button type="button" id="btn-reset-colors" class="btn btn-secondary btn-sm">استعادة الألوان الافتراضية</button>
+      </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="c-bg">لون الخلفية الرئيسية</label>
+          <div class="color-picker-row">
+            <input type="color" id="c-bg" class="color-input" value="#0b0f19">
+            <input type="text" id="c-bg-hex" class="input input-ltr" value="#0b0f19">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="c-accent">اللون الأساسي (التمييز)</label>
+          <div class="color-picker-row">
+            <input type="color" id="c-accent" class="color-input" value="#8b5cf6">
+            <input type="text" id="c-accent-hex" class="input input-ltr" value="#8b5cf6">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="c-emerald">اللون الثانوي (التحميل والشارات)</label>
+          <div class="color-picker-row">
+            <input type="color" id="c-emerald" class="color-input" value="#10b981">
+            <input type="text" id="c-emerald-hex" class="input input-ltr" value="#10b981">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Android Apps -->
+    <section id="tab-apps" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="section-bar-head">
+        <h2 style="margin:0;">إدارة تطبيقات الأندرويد</h2>
+        <button type="button" id="btn-add-app" class="btn btn-primary btn-sm">+ إضافة تطبيق جديد</button>
+      </div>
+      <div id="admin-apps-list"></div>
+    </section>
+
+    <!-- Tab 3: Desktop Tools -->
+    <section id="tab-tools" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <div class="section-bar-head">
+        <h2 style="margin:0;">إدارة أدوات الحاسوب والتعريب</h2>
+        <button type="button" id="btn-add-tool" class="btn btn-primary btn-sm">+ إضافة أداة جديدة</button>
+      </div>
+      <div id="admin-tools-list"></div>
+    </section>
+
+    <!-- Tab 4: YouTube Channel -->
+    <section id="tab-youtube" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <h2>إدارة قناة اليوتيوب (@rk2003)</h2>
+      <div class="form-grid">
         <div class="form-field">
           <label for="f-youtubeUrl">رابط قناة اليوتيوب</label>
           <input type="url" id="f-youtubeUrl" class="input input-ltr">
@@ -102,9 +146,13 @@
           <input type="text" id="f-youtubeHandle" class="input input-ltr" placeholder="@rk2003">
         </div>
         <div class="form-field">
-          <label for="f-youtubeFeaturedVideoId">معرّف أو رابط الفيديو المميز على يوتيوب</label>
-          <input type="text" id="f-youtubeFeaturedVideoId" class="input input-ltr" placeholder="مثال: dQw4w9WgXcQ أو رابط الفيديو كاملاً">
-          <small>اتركه فارغاً إذا لم تنشر فيديو بعد، وسيعرض الموقع بطاقة القناة تلقائياً.</small>
+          <label for="f-youtubeChannelName">اسم القناة</label>
+          <input type="text" id="f-youtubeChannelName" class="input input-ltr">
+        </div>
+        <div class="form-field">
+          <label for="f-youtubeFeaturedVideoId">رابط أو معرّف الفيديو الرئيسي المميز</label>
+          <input type="text" id="f-youtubeFeaturedVideoId" class="input input-ltr" placeholder="الصق رابط يوتيوب كاملاً مثل https://youtu.be/...">
+          <small>يُستخرج <span class="ltr-inline">Video ID</span> تلقائياً من أي رابط يوتيوب.</small>
         </div>
         <div class="form-field full">
           <label for="f-youtubeDescription">وصف قسم اليوتيوب</label>
@@ -112,25 +160,72 @@
         </div>
       </div>
 
-      <div id="yt-preview-box" style="margin-top:18px;"></div>
+      <div id="yt-preview-box" style="margin-top:16px;"></div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:24px 0;">
+
+      <div class="section-bar-head">
+        <div>
+          <h3 style="margin:0;">قائمة الفيديوهات المميزة الإضافية</h3>
+          <small class="muted">أضف عدة فيديوهات بلصق رابط كل فيديو ليظهر كقائمة تشغيل في الموقع.</small>
+        </div>
+        <button type="button" id="btn-add-yt-video" class="btn btn-primary btn-sm">+ إضافة فيديو</button>
+      </div>
+      <div id="admin-yt-videos-list"></div>
     </section>
 
-    <!-- Tab 2: Android Apps -->
-    <section id="tab-apps" class="admin-panel-card glass-card tab-pane" style="display:none;">
+    <!-- Tab 5: Atlas Help Center -->
+    <section id="tab-atlas-help" class="admin-panel-card glass-card tab-pane" style="display:none;">
       <div class="section-bar-head">
-        <h2 style="margin:0;">تطبيقات الأندرويد</h2>
-        <button type="button" id="btn-add-app" class="btn btn-primary btn-sm">+ إضافة تطبيق جديد</button>
+        <div>
+          <h2 style="margin:0;">أقسام مركز مساعدة أطلس</h2>
+          <small class="muted">تظهر هذه الأقسام مباشرة في صفحة <span class="ltr-inline">atlas.html</span>.</small>
+        </div>
+        <button type="button" id="btn-add-help-sec" class="btn btn-primary btn-sm">+ إضافة قسم مساعدة</button>
       </div>
-      <div id="admin-apps-list"></div>
+      <div id="admin-help-sections-list"></div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
+
+      <div class="section-bar-head">
+        <h2 style="margin:0;">الأسئلة الشائعة (FAQ)</h2>
+        <button type="button" id="btn-add-faq" class="btn btn-primary btn-sm">+ إضافة سؤال وجواب</button>
+      </div>
+      <div id="admin-faqs-list"></div>
     </section>
 
-    <!-- Tab 3: Desktop Tools -->
-    <section id="tab-tools" class="admin-panel-card glass-card tab-pane" style="display:none;">
-      <div class="section-bar-head">
-        <h2 style="margin:0;">أدوات الحاسوب والتعريب</h2>
-        <button type="button" id="btn-add-tool" class="btn btn-primary btn-sm">+ إضافة أداة جديدة</button>
+    <!-- Tab 6: Quick Connect & Backup -->
+    <section id="tab-sync" class="admin-panel-card glass-card tab-pane" style="display:none;">
+      <h2>الربط السريع مع GitHub</h2>
+      <p class="muted" style="margin-top:0;">
+        يُحفظ الرمز في متصفحك محلياً فقط (<span class="ltr-inline">localStorage</span>) لتفعيل زر «حفظ ونشر التعديلات».
+      </p>
+
+      <div style="margin-bottom:14px;">
+        <a href="https://github.com/settings/tokens/new?description=Reda6Dev-Website-Admin&scopes=public_repo" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+          إنشاء GitHub Token جاهز الصلاحيات
+        </a>
       </div>
-      <div id="admin-tools-list"></div>
+
+      <div class="token-row">
+        <input type="password" id="gh-token" class="input input-ltr" placeholder="ghp_... أو github_pat_...">
+        <button type="button" id="btn-toggle-token" class="btn btn-secondary btn-sm">إظهار / إخفاء</button>
+        <button type="button" id="btn-save-token" class="btn btn-primary btn-sm">حفظ الرمز</button>
+        <button type="button" id="btn-test-token" class="btn btn-emerald btn-sm">اختبار الاتصال</button>
+        <button type="button" id="btn-clear-token" class="btn btn-danger btn-sm">مسح الرمز</button>
+      </div>
+      <small id="token-status" class="muted" style="display:block;margin-top:10px;"></small>
+      <div id="github-user-info"></div>
+
+      <hr style="border:0;border-top:1px solid var(--border);margin:26px 0;">
+
+      <h2>النسخ الاحتياطي والاستيراد</h2>
+      <p class="muted" style="margin-top:0;">احتفظ بنسخة احتياطية كاملة من إعدادات الموقع أو استعدها في أي وقت.</p>
+      <div class="admin-actions-bar">
+        <button type="button" id="btn-export-json" class="btn btn-secondary">تصدير نسخة احتياطية (Export JSON)</button>
+        <label for="import-json-input" class="btn btn-primary" style="cursor:pointer;">استيراد نسخة احتياطية (Import JSON)</label>
+        <input type="file" id="import-json-input" accept=".json,application/json" style="display:none;">
+      </div>
     </section>
   </main>
 

@@ -1,6 +1,15 @@
 (function () {
   "use strict";
 
+  // Redirect ?admin=1 shortcut cleanly to admin.html
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("admin") === "1") {
+      window.location.replace("admin.html");
+      return;
+    }
+  } catch (_) {}
+
   const RELEASE_CACHE_TTL_MS = 10 * 60 * 1000;
   let currentFilter = "all";
   let siteConfig = null;
@@ -19,8 +28,23 @@
   function safeUrl(url, fallback = "#") {
     const val = String(url ?? "").trim();
     if (!val) return fallback;
-    if (/^(https?:\/\/|assets\/|\.\/)/i.test(val)) return val;
+    if (/^(https?:\/\/|assets\/|\.\/|[a-z0-9_-]+\.html)/i.test(val)) return val;
     return fallback;
+  }
+
+  function applyTheme(theme) {
+    if (!theme) return;
+    const root = document.documentElement;
+    if (/^#[0-9a-fA-F]{6}$/.test(theme.bg || "")) {
+      root.style.setProperty("--bg", theme.bg);
+    }
+    if (/^#[0-9a-fA-F]{6}$/.test(theme.accent || "")) {
+      root.style.setProperty("--accent", theme.accent);
+      root.style.setProperty("--accent-strong", theme.accent);
+    }
+    if (/^#[0-9a-fA-F]{6}$/.test(theme.emerald || "")) {
+      root.style.setProperty("--emerald", theme.emerald);
+    }
   }
 
   function extractYouTubeId(input) {
@@ -95,10 +119,7 @@
     if (!Array.isArray(assets) || !assets.length) return null;
     const apks = assets.filter((a) => /\.apk$/i.test(a.name || ""));
     if (!apks.length) return null;
-    // Prefer universal apk without abi suffix, then arm64-v8a, then first apk
-    const universal = apks.find(
-      (a) => !/(arm64|armeabi|x86)/i.test(a.name)
-    );
+    const universal = apks.find((a) => !/(arm64|armeabi|x86)/i.test(a.name));
     if (universal) return universal;
     const arm64 = apks.find((a) => /arm64-v8a/i.test(a.name));
     return arm64 || apks[0];
@@ -125,25 +146,14 @@
     document.getElementById("footer-year").textContent = String(new Date().getFullYear());
   }
 
-  function renderYouTubeSection(site) {
-    const ytUrl = safeUrl(site.youtubeUrl, "https://www.youtube.com/@rk2003");
-    const subUrl = ytUrl.includes("?") ? ytUrl : `${ytUrl}?sub_confirmation=1`;
-    document.getElementById("yt-handle-title").textContent = site.youtubeHandle || "@rk2003";
-    document.getElementById("yt-channel-name").textContent = site.youtubeChannelName || "REDA DEV";
-    document.getElementById("yt-channel-handle").textContent = site.youtubeHandle || "@rk2003";
-    document.getElementById("yt-section-desc").textContent = site.youtubeDescription || "";
-    document.getElementById("yt-bio").textContent = site.youtubeDescription || "";
-    document.getElementById("yt-subscribe-link").href = subUrl;
-    document.getElementById("yt-visit-link").href = ytUrl;
-
+  function renderYouTubePlayer(vid, channelName, ytUrl, handle) {
     const playerBox = document.getElementById("youtube-player-box");
-    const videoId = extractYouTubeId(site.youtubeFeaturedVideoId);
-    if (videoId) {
+    if (vid) {
       playerBox.innerHTML = `
         <div class="yt-aspect">
           <iframe
-            src="https://www.youtube-nocookie.com/embed/${escapeHtml(videoId)}?rel=0"
-            title="فيديو قناة ${escapeHtml(site.youtubeChannelName || "REDA DEV")}"
+            src="https://www.youtube-nocookie.com/embed/${escapeHtml(vid)}?rel=0"
+            title="فيديو قناة ${escapeHtml(channelName)}"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen
             loading="lazy">
@@ -154,15 +164,76 @@
       playerBox.innerHTML = `
         <div class="yt-placeholder">
           <div class="yt-play-circle">▶</div>
-          <h3>قناة ${escapeHtml(site.youtubeChannelName || "REDA DEV")}</h3>
+          <h3>قناة ${escapeHtml(channelName)}</h3>
           <p class="muted" style="max-width:460px;margin:0;">
             ترقّب الشروحات المرئية الجديدة للتطبيقات وأدوات التعريب على القناة قريباً، ويمكنك تفعيل جرس التنبيهات من زر الاشتراك.
           </p>
           <a href="${escapeHtml(ytUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-youtube btn-sm">
-            فتح القناة الآن (${escapeHtml(site.youtubeHandle || "@rk2003")})
+            فتح القناة الآن (${escapeHtml(handle)})
           </a>
         </div>
       `;
+    }
+  }
+
+  function renderYouTubeSection(site) {
+    const ytUrl = safeUrl(site.youtubeUrl, "https://www.youtube.com/@rk2003");
+    const subUrl = ytUrl.includes("?") ? ytUrl : `${ytUrl}?sub_confirmation=1`;
+    const channelName = site.youtubeChannelName || "REDA DEV";
+    const handle = site.youtubeHandle || "@rk2003";
+
+    document.getElementById("yt-handle-title").textContent = handle;
+    document.getElementById("yt-channel-name").textContent = channelName;
+    document.getElementById("yt-channel-handle").textContent = handle;
+    document.getElementById("yt-section-desc").textContent = site.youtubeDescription || "";
+    document.getElementById("yt-bio").textContent = site.youtubeDescription || "";
+    document.getElementById("yt-subscribe-link").href = subUrl;
+    document.getElementById("yt-visit-link").href = ytUrl;
+
+    // Combine youtubeFeaturedVideoId + youtubeVideos array cleanly
+    const videos = [];
+    const seen = new Set();
+    const listRaw = Array.isArray(site.youtubeVideos) ? site.youtubeVideos : [];
+    for (const item of listRaw) {
+      const id = extractYouTubeId(typeof item === "string" ? item : item?.id || item?.url);
+      if (id && !seen.has(id)) {
+        seen.add(id);
+        videos.push({ id, title: (typeof item === "object" && item?.title) ? item.title : `فيديو ${videos.length + 1}` });
+      }
+    }
+    const singleId = extractYouTubeId(site.youtubeFeaturedVideoId);
+    if (singleId && !seen.has(singleId)) {
+      seen.add(singleId);
+      videos.unshift({ id: singleId, title: "الفيديو المميز" });
+    }
+
+    renderYouTubePlayer(videos[0]?.id || "", channelName, ytUrl, handle);
+
+    const playlistBox = document.getElementById("yt-playlist-box");
+    if (videos.length > 1) {
+      playlistBox.innerHTML = `
+        <div class="yt-playlist-label">فيديوهات القناة المميزة:</div>
+        <div class="yt-playlist-items">
+          ${videos
+            .map(
+              (v, i) => `
+              <button type="button" class="yt-vid-chip ${i === 0 ? "active" : ""}" data-vid="${escapeHtml(v.id)}">
+                ▶ ${escapeHtml(v.title)}
+              </button>
+            `
+            )
+            .join("")}
+        </div>
+      `;
+      playlistBox.querySelectorAll(".yt-vid-chip").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          playlistBox.querySelectorAll(".yt-vid-chip").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          renderYouTubePlayer(btn.dataset.vid, channelName, ytUrl, handle);
+        });
+      });
+    } else {
+      playlistBox.innerHTML = "";
     }
   }
 
@@ -197,6 +268,9 @@
           .join("");
 
         const releasesUrl = `https://github.com/${app.repo}/releases`;
+        const pageBtnHtml = app.pageUrl
+          ? `<a href="${escapeHtml(safeUrl(app.pageUrl))}" class="btn btn-primary">صفحة التطبيق ومركز المساعدة</a>`
+          : "";
 
         return `
           <article class="app-card glass-card" data-app-id="${escapeHtml(app.id)}">
@@ -217,6 +291,7 @@
                 <a id="dl-app-${appIndex}" href="${escapeHtml(releasesUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-emerald">
                   تحميل APK المباشر
                 </a>
+                ${pageBtnHtml}
                 <a href="${escapeHtml(releasesUrl)}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                   صفحة الإصدارات
                 </a>
@@ -245,7 +320,6 @@
       });
     });
 
-    // Hydrate latest releases asynchronously
     apps.forEach(async (app, idx) => {
       const rel = await fetchLatestRelease(app.repo);
       const verEl = document.getElementById(`ver-app-${idx}`);
@@ -292,12 +366,16 @@
           .map((tag) => `<span class="tag-chip">${escapeHtml(tag)}</span>`)
           .join("");
 
+        const iconBlock = tool.iconImg
+          ? `<div class="tool-emoji tool-emoji-img"><img src="${escapeHtml(safeUrl(tool.iconImg))}" alt="${escapeHtml(tool.name)}" loading="lazy"></div>`
+          : `<div class="tool-emoji" aria-hidden="true">${escapeHtml(tool.icon || "🛠️")}</div>`;
+
         return `
           <article class="tool-card glass-card">
             <div>
               <div class="tool-top">
                 <div class="tool-title-group">
-                  <div class="tool-emoji" aria-hidden="true">${escapeHtml(tool.icon || "🛠️")}</div>
+                  ${iconBlock}
                   <div>
                     <h3 class="tool-name">${escapeHtml(tool.name)}</h3>
                     <span class="tool-category">${escapeHtml(tool.category || "")}</span>
@@ -423,6 +501,7 @@
       const res = await fetch(`site-config.json?t=${Date.now()}`, { cache: "no-store" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       siteConfig = await res.json();
+      applyTheme(siteConfig.theme);
       renderHeaderAndHero(siteConfig.site || {});
       renderApps(siteConfig.androidApps || []);
       renderTools(siteConfig.desktopTools || []);
